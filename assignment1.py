@@ -10,6 +10,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
+import scipy.io as sio 
 # Create an index of class names
 
 class_names = sorted(os.listdir(r"D:\Downloads\DOCUMENTS\STUDIES\ml\pattern_recognition_ml\Code\project\train\train"))
@@ -62,6 +63,7 @@ for root, dirs, files in os.walk(r"D:\Downloads\DOCUMENTS\STUDIES\ml\pattern_rec
             X.append(x)
 
             name = os.path.join(root, name)
+            
             label = name.split(os.sep)[-2]
             print(label)
             y.append(class_names.index(label))
@@ -70,6 +72,11 @@ for root, dirs, files in os.walk(r"D:\Downloads\DOCUMENTS\STUDIES\ml\pattern_rec
 # Cast the python lists to a numpy array
 X = np.array(X)
 y = np.array(y)
+
+print(X.shape)
+print(y.shape)
+
+sio.savemat('features.mat', mdict={'X' : X, 'y' : y})
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, train_size = 0.8)
