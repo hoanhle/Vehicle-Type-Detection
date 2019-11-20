@@ -15,12 +15,18 @@ y = mat_contents['y'].ravel()
 
 print(X.shape)
 print(y.shape)
+"""
+CHANGE THE MODEL AND TRAIN IT
+"""
 # Define classifier
 SVC_rbf = SVC(kernel='rbf')
 
 # Training model
 SVC_rbf.fit(X, y)
 
+"""
+REMEMBER TO CHANGE THE FILENAME
+"""
 # Save the model
 filename = 'trained_SVC'
 joblib.dump(SVC_rbf, filename)
