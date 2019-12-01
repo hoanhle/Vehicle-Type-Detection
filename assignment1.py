@@ -14,7 +14,6 @@ import scipy.io as sio
 # Create an index of class names
 
 class_names = sorted(os.listdir(r"D:\Downloads\DOCUMENTS\STUDIES\ml\pattern_recognition_ml\Code\project\train\train"))
-
 # Prepare a pretrained CNN for feature extraction
 
 base_model = tf.keras.applications.mobilenet.MobileNet(

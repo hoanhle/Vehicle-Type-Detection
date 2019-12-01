@@ -1,6 +1,11 @@
 import scipy.io as sio
 import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.metrics import accuracy_score
 from sklearn.svm import SVC
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 import cv2
 import matplotlib.pyplot as plt
 import os
@@ -16,12 +21,12 @@ y = mat_contents['y'].ravel()
 print(X.shape)
 print(y.shape)
 # Define classifier
-SVC_rbf = SVC(kernel='rbf')
+classifier = LinearDiscriminantAnalysis()
 
 # Training model
-SVC_rbf.fit(X, y)
+classifier.fit(X, y)
 
 # Save the model
-filename = 'trained_SVC'
-joblib.dump(SVC_rbf, filename)
+filename = 'trained_LDA'
+joblib.dump(classifier, filename)
 

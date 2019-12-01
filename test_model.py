@@ -30,7 +30,7 @@ model = tf.keras.models.Model(inputs=[in_tensor], outputs=[out_tensor])
 # anything here, since we don't train the model
 model.compile(loss="categorical_crossentropy", optimizer='sgd')
 
-SVC_rbf = joblib.load('trained_SVC')
+trained_model = joblib.load('trained_SVC')
 
 with open("submission.csv", "w") as fp:
     fp.write("Id,Category\n")
@@ -56,7 +56,7 @@ with open("submission.csv", "w") as fp:
 
 
             # 3. predict class using the sklearn model
-            class_index = SVC_rbf.predict(x)[0]
+            class_index = trained_model.predict(x)[0]
 
             # 4. convert class id to name (label = class_names[class_index])
             label = class_names[class_index]
