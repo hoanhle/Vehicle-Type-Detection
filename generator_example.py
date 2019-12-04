@@ -4,6 +4,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, Dropout, Flatten
 from tensorflow.keras.layers import Conv2D, MaxPooling2D
 from helpers import separate_test_train_dirs, generate_augment
+from sklearn.externals import joblib
 
 input_generator_shape = (224, 224)
 input_shape = (224, 224, 3) # including color channels
@@ -22,9 +23,9 @@ epochs = 12
 
 base_model = MobileNet( input_shape = input_shape, alpha=1.0, include_top = False)
 w = base_model.output
-w = Flatten(w)
+w = Flatten()(w)
 W = Dense(128, activation = "relu")(w)
-output = Dense(1, activation = "sigmoid")(w)
+output = Dense(17, activation = "sigmoid")(w)
 model = Model(inputs = [base_model.input], outputs = [output])
 
 model.compile(loss=tensorflow.keras.losses.categorical_crossentropy,
@@ -44,3 +45,6 @@ model.fit_generator(train_generator,
 				    validation_data = validation_generator, 
 				    validation_steps = validation_generator.samples // batch_size,
 					epochs=epochs)
+
+filename = 'trained_MobileNet'
+joblib.dump(model, filename)
