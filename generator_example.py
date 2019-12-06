@@ -1,8 +1,10 @@
 import tensorflow
-from tensorflow.keras.models import Sequential
+from tensorflow.applications.mobilenet import MobileNet
+from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, Dropout, Flatten
 from tensorflow.keras.layers import Conv2D, MaxPooling2D
 from helpers import separate_test_train_dirs, generate_augment
+from sklearn.externals import joblib
 
 input_generator_shape = (224, 224)
 input_shape = (224, 224, 3) # including color channels
@@ -19,18 +21,12 @@ separate_test_train_dirs(all_path, train_path, test_path)
 num_classes = 17 # number of classes in the data
 epochs = 12
 
-### A simple neural network from the exercises
-model = Sequential()
-model.add(Conv2D(32, kernel_size=(3, 3),
-                 activation='relu',
-                 input_shape=input_shape))
-model.add(Conv2D(64, (3, 3), activation='relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.25))
-model.add(Flatten())
-model.add(Dense(128, activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(num_classes, activation='softmax'))
+base_model = MobileNet( input_shape = input_shape, alpha=1.0, include_top = False)
+w = base_model.output
+w = Flatten()(w)
+W = Dense(128, activation = "relu")(w)
+output = Dense(17, activation = "sigmoid")(w)
+model = Model(inputs = [base_model.input], outputs = [output])
 
 model.compile(loss=tensorflow.keras.losses.categorical_crossentropy,
               optimizer=tensorflow.keras.optimizers.Adadelta(),
@@ -49,3 +45,6 @@ model.fit_generator(train_generator,
 				    validation_data = validation_generator, 
 				    validation_steps = validation_generator.samples // batch_size,
 					epochs=epochs)
+
+filename = 'trained_MobileNet'
+joblib.dump(model, filename)
