@@ -2,7 +2,6 @@ import os
 import shutil
 import numpy as np
 from keras.preprocessing.image import ImageDataGenerator 
-from preprocess import batch_generator
 
 def separate_test_train_dirs(all_data_dir, training_data_dir, testing_data_dir, testing_data_pct = 0.2):
     """
@@ -71,7 +70,10 @@ def generate_augment(train_path, test_path, shape, batch_size = 32):
     train_datagen = ImageDataGenerator(
         shear_range=0.2,
         zoom_range=0.2,
-        horizontal_flip=True)
+        horizontal_flip=True, 
+        rotation_range=20,
+        width_shift_range=0.2,
+        height_shift_range=0.2)
 
     test_datagen = ImageDataGenerator()
 
