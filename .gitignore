@@ -1,2 +1,5 @@
 *.mat
 testset
+train_only
+test_only
+train
