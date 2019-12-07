@@ -4,17 +4,25 @@ import matplotlib.pyplot as plt
 import os
 import tensorflow as tf
 from tensorflow.keras.models import load_model
+from combine_model import ensemble_predictions
 
 # CHANGE THESE
-all_dir = 'all_images/'
+all_dir = 'train/train'
 test_dir = "testset/"
-model_path = 'my_model.h5'
 
 # Create an index of class names
 
 class_names = sorted(os.listdir(all_dir))
 
-trained_model = load_model(model_path)
+
+"""
+TODO: Change model paths
+"""
+model1 = load_model("my_model.h5")
+model2 = load('./InceptionV3-model')
+
+models = [model1, model2]
+
 
 with open("submissionCNN.csv", "w") as fp:
     fp.write("Id,Category\n")
@@ -22,7 +30,8 @@ with open("submissionCNN.csv", "w") as fp:
     # Image index
     i = 0
     # 1. load image and resize
-    for file in sorted(os.listdir(test_dir)):
+    for file in os.listdir(test_dir):
+        print(file)
         if file.endswith(".jpg"):
             # Load the image
             img = plt.imread(test_dir + file)
@@ -35,7 +44,7 @@ with open("submissionCNN.csv", "w") as fp:
 
             # Predict class by picking the highest probability index
             # then add 1 (due to indexing behavior)
-            class_index = np.argmax(trained_model.predict(img)[0]) + 1
+            class_index = ensemble_predictions(models, img)
 
             # Convert class id to name
             label = class_names[class_index]
