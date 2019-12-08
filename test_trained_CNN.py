@@ -4,11 +4,11 @@ import matplotlib.pyplot as plt
 import os
 import tensorflow as tf
 from tensorflow.keras.models import load_model
-from combine_model import ensemble_predictions
+from combine_model import ensemble
 
 # CHANGE THESE
-all_dir = 'train/train'
-test_dir = "testset/"
+all_dir = r'C:\Users\RogerRoger\PycharmProjects\ML\Part2\Vehicle-Type-Detection/train/train'
+test_dir = r"C:\Users\RogerRoger\PycharmProjects\ML\Part2\Vehicle-Type-Detection/test/testset/"
 
 # Create an index of class names
 
@@ -19,7 +19,7 @@ class_names = sorted(os.listdir(all_dir))
 TODO: Change model paths
 """
 model1 = load_model("my_model.h5")
-model2 = load('./InceptionV3-model')
+model2 = tf.saved_model.load('./InceptionV3-model')
 
 models = [model1, model2]
 
@@ -44,7 +44,7 @@ with open("submissionCNN.csv", "w") as fp:
 
             # Predict class by picking the highest probability index
             # then add 1 (due to indexing behavior)
-            class_index = ensemble_predictions(models, img)
+            class_index = ensemble(models, img)
 
             # Convert class id to name
             label = class_names[class_index]
