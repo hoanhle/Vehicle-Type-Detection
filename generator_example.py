@@ -40,11 +40,19 @@ train_generator, validation_generator = generate_augment(train_path,
 										input_generator_shape,
 										batch_size)
 
+# Since the training data is imbalance, we set the class weights for each category here
+
+
+class_weights = {0: 65.8, 1: 43.0, 2: 5.4, 3: 1.0, 4: 4.1, 5: 1.3, 6: 170.5, 7: 26.3, 
+				8: 13.0, 9: 117.5, 10: 3.2, 11: 58.8, 12: 70.7, 13: 42.2, 14: 11.6,
+				15: 4.3, 16: 7.8}
+
 model.fit_generator(train_generator,
 				    steps_per_epoch = train_generator.samples // batch_size,
 				    validation_data = validation_generator, 
 				    validation_steps = validation_generator.samples // batch_size,
-					epochs=epochs)
+					epochs=epochs
+					class_weight= class_weights)
 
-filename = 'trained_MobileNet'
-joblib.dump(model, filename)
+model_name = 'inception_model'
+model.save(model_name)

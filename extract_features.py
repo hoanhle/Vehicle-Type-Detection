@@ -77,6 +77,7 @@ print(y.shape)
 
 sio.savemat('features.mat', mdict={'X' : X, 'y' : y})
 
+# Split images into train and validation folder 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, train_size = 0.8)
 
