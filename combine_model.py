@@ -1,7 +1,6 @@
 import tensorflow as tf
 import numpy as np
 from tensorflow.keras.models import load_model
-from tensorflow.saved_model import load 
 
 
 """
@@ -18,7 +17,9 @@ def ensemble_predictions(members, test_image):
     summed = np.sum(preds, axis=0)
     result = np.argmax(summed, axis=1)
 
-    return result 
+    return result
+
+
 
 
 
