@@ -4,18 +4,12 @@ import matplotlib.pyplot as plt
 import os
 import tensorflow as tf
 from tensorflow.keras.models import load_model
-from combine_model import ensemble
 
 
 # CHANGE THESE
-<<<<<<< HEAD
 all_dir = 'train/train'
 test_dir = "testset/"
 model_path = 'my_model.h5'
-=======
-all_dir = r'C:\Users\RogerRoger\PycharmProjects\ML\Part2\Vehicle-Type-Detection/train/train'
-test_dir = r"C:\Users\RogerRoger\PycharmProjects\ML\Part2\Vehicle-Type-Detection/test/testset/"
->>>>>>> 63ebae7e1595bf0dba0a33490be88f38c113c008
 
 # Create an index of class names
 
@@ -26,12 +20,8 @@ trained_model = load_model(model_path)
 TODO: Saved inception model to h5 and load it here
 """
 model1 = load_model("my_model.h5")
-<<<<<<< HEAD
-model2 = load_model("inception_model.h5")
-=======
 model2 = tf.saved_model.load('./InceptionV3-model')
 
->>>>>>> 63ebae7e1595bf0dba0a33490be88f38c113c008
 models = [model1, model2]
 
 def ensemble_models(models):
@@ -67,11 +57,8 @@ with open("submissionCNN.csv", "w") as fp:
 
             # Predict class by picking the highest probability index
             # then add 1 (due to indexing behavior)
-<<<<<<< HEAD
             class_index = np.argmax(modelMerge.predict(img)[0])
-=======
             class_index = ensemble(models, img)
->>>>>>> 63ebae7e1595bf0dba0a33490be88f38c113c008
 
             # Convert class id to name
             label = class_names[class_index]
