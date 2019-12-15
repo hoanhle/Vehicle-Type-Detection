@@ -18,8 +18,8 @@ class_names = sorted(os.listdir(all_dir))
 TODO: Saved inception model to h5 and load it here
 """
 model1 = load_model('mobilenet2.h5')
-model2 = load_model('InceptionV33.h5')
-model3 = load_model('densenet.h5')
+model2 = load_model('InceptionV34.h5')
+model3 = load_model('densenet1.h5')
 
 models = [model1, model2, model3]
 

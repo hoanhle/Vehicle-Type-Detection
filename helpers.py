@@ -82,6 +82,8 @@ def generate_augment(train_path, test_path, shape, batch_size = 32):
         target_size=shape,
         batch_size=batch_size)
 
+    print(train_generator.class_indices)
+
     validation_generator = test_datagen.flow_from_directory(
         test_path, # same directory as training data
         target_size=shape,
