@@ -76,6 +76,7 @@ Among the 5 training models we use, convolutional neural network is proved to be
 
 ## Accuracy
 The accuracies of all trained models, tested on the test set are presented in the table below.
+
 | Classifier                              | Validation  accuracy | Kaggle accuracy  (public leaderboard) |
 |-----------------------------------------|:--------------------:|:-------------------------------------:|
 | Ensembled CNNs                          |                      |                  91%                  |
